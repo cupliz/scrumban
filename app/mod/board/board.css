@@ -1,0 +1,90 @@
+.pblock{
+    cursor: pointer;
+    height: 100px;
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin: 10px 0;
+    box-shadow:2px 2px 3px #bbb;
+}
+.pblock:hover{
+    background: #00ccff !important;
+}
+.pblock big{
+    font-weight: bold;
+    font-size: 15px;
+}
+.panel{
+  box-shadow:2px 2px 3px #bbb;
+  margin-bottom: 5px;
+  border-radius: 3px 5px 10px 10px;
+}
+.panel-body{
+    padding: 8px;
+}
+.vertical{
+    display: block;
+}
+.horizontal{
+    display: inline-block;
+    max-width: 100px;
+    max-height: 62px;
+    line-height: 23px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.textarea{
+    margin-top: 10px;
+    resize: none;
+}
+.trash{
+    height: 100px;
+    margin-right: -20px;
+    padding-top: 4px;
+}
+.backlog{
+    height:116px;
+    overflow: auto;
+}
+ul[dnd-list],
+ul[dnd-list] > li {
+	position: relative;
+}
+
+ul[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px;
+}
+
+ul[dnd-list] .dndDraggingSource {
+    display: none;
+}
+
+ul[dnd-list] .dndPlaceholder {
+    display: inline-block;
+    background-color: #ddd;
+    min-height: 50px;
+    min-width: 50px;
+}
+
+ul[dnd-list] li{
+    word-wrap: break-word;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 10px 15px;
+    margin: 4px;
+}
+
+ul[dnd-list] li.selected {
+    background-color: #eeeeee ;
+}
+.bl-white{border-left: 5px solid #fff !important;}
+.bl-black{border-left: 5px solid #444 !important;}
+.bl-grey{border-left: 5px solid #bbb !important;}
+.bl-red{border-left: 5px solid #e63131 !important;}
+.bl-green{border-left: 5px solid #6fae26 !important;}
+.bl-blue{border-left: 5px solid #0275d7 !important;}
+.bl-orange{border-left: 5px solid #ed450c !important;}
+.bl-pink{border-left: 5px solid  #fb226f !important;}
+.bl-yellow{border-left: 5px solid  #ffb800 !important;}

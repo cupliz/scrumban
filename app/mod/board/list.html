@@ -1,0 +1,8 @@
+<div ng-repeat="project in pList">
+	<div class="col-md-3">
+	<div ui-sref="board.d({pid:project.pid})" class="pblock bg-blue">
+		<big>{{project.title}}</big>
+		<p>{{project.description}}</p>
+	</div>
+	</div>
+</div>

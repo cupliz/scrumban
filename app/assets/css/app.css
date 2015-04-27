@@ -1,0 +1,114 @@
+body{
+  padding: 60px 0;
+  background: #fff url(../img/masthead-pat.gif) repeat 0 0;
+/*background:#2d88bc url(../img/footer-pat.gif) repeat 0 0;*/
+}
+
+a,u{
+  text-decoration: none;
+  cursor: pointer;
+}
+.navbar-custom{background-color: #2d88bc;
+  color:#fff;
+}
+.navbar-search{
+  width: 200px;
+  margin-top: -4%;
+}
+.pull-center{
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+.row > [class^="col-"],
+.row > [class*=" col-"] {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.btn-circle{
+  margin: 0 5%;
+  border-radius: 50%;
+}
+
+.btn-panel{
+  margin: -12%;
+  border-radius: 10px;
+}
+.modal-dialog{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  overflow: auto;
+  overflow-y: scroll;
+}
+/*::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 20px;
+    border-radius: 10px;
+    background: #e3e3e3; 
+}*/
+
+
+.bg-white {background-color: #ffffff !important;}
+.bg-transparent {background-color: transparent !important;}
+.bg-black {background-color: #000000 !important; color:#fff}
+.bg-lime {background-color: #a4c400 !important; color:#fff}
+.bg-green {background-color: #60a917 !important; color:#fff}
+.bg-emerald {background-color: #008a00 !important; color:#fff}
+.bg-teal {background-color: #00aba9 !important; color:#fff}
+.bg-purple {background-color: #702583 !important; color:#fff}
+.bg-cyan {background-color: #1ba1e2 !important; color:#fff}
+.bg-cobalt {background-color: #0050ef !important; color:#fff}
+.bg-indigo {background-color: #6a00ff !important; color:#fff}
+.bg-violet {background-color: #aa00ff !important; color:#fff}
+.bg-pink {background-color: #dc4fad !important; color:#fff}
+.bg-magenta {background-color: #d80073 !important; color:#fff}
+.bg-crimson {background-color: #a20025 !important; color:#fff}
+.bg-red {background-color: #e51400 !important; color:#fff}
+.bg-orange {background-color: #fa6800 !important; color:#fff}
+.bg-amber {background-color: #f0a30a !important; color:#fff}
+.bg-yellow {background-color: #ffb800 !important; color:#fff}
+.bg-brown {background-color: #825a2c !important; color:#fff}
+.bg-olive {background-color: #6d8764 !important; color:#fff}
+.bg-steel {background-color: #647687 !important; color:#fff}
+.bg-mauve {background-color: #76608a !important; color:#fff}
+.bg-taupe {background-color: #87794e !important; color:#fff}
+.bg-gray {background-color: #555555 !important; color:#fff}
+.bg-blue {background-color: #4390df !important; color:#fff}
+.bg-dark {background-color: #333333 !important; color:#fff}
+.bg-darker {background-color: #222222 !important; color:#fff}
+.bg-darkBrown {background-color: #63362f !important; color:#fff}
+.bg-darkCrimson {background-color: #640024 !important; color:#fff}
+.bg-darkMagenta {background-color: #81003c !important; color:#fff}
+.bg-darkIndigo {background-color: #4b0096 !important; color:#fff}
+.bg-darkCyan {background-color: #1b6eae !important; color:#fff}
+.bg-darkCobalt {background-color: #00356a !important; color:#fff}
+.bg-darkTeal {background-color: #004050 !important; color:#fff}
+.bg-darkEmerald {background-color: #003e00 !important; color:#fff}
+.bg-darkGreen {background-color: #128023 !important; color:#fff}
+.bg-darkOrange {background-color: #bf5a15 !important; color:#fff}
+.bg-darkRed {background-color: #9a1616 !important; color:#fff}
+.bg-darkPink {background-color: #9a165a !important; color:#fff}
+.bg-darkViolet {background-color: #57169a !important; color:#fff}
+.bg-darkBlue {background-color: #16499a !important; color:#fff}
+.bg-lightBlue {background-color: #14b9e8 !important; color:#fff}
+.bg-lightRed {background-color: #ff2d19 !important; color:#fff}
+.bg-lightGreen {background-color: #7ad61d !important; color:#fff}
+.bg-lighterBlue {background-color: #00ccff !important; color:#fff}
+.bg-lightTeal {background-color: #45fffd !important; color:#fff}
+.bg-lightOlive {background-color: #78aa1c !important; color:#fff}
+.bg-lightOrange {background-color: #c29008 !important; color:#fff}
+.bg-lightPink {background-color: #f472d0 !important; color:#fff}
+.bg-grayDark {background-color: #333333 !important; color:#fff}
+.bg-grayDarker {background-color: #222222 !important; color:#fff}
+.bg-grayLight {background-color: #999999 !important; color:#fff}
+.bg-grayLighter {background-color: #eeeeee !important; color:#fff}
