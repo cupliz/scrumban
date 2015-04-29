@@ -8,7 +8,7 @@ var express = require('express'),
 	con = mysql.createConnection({
 		host:'localhost',
 		user:'root',
-		password:'admin',
+		password:'',
 		database:'scrumban'
 	});
 

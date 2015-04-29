@@ -17,7 +17,7 @@ if(basic[0] && basic[1]){
             // }
             t=10800;
             c = t/10;
-            con.query("SELECT expire,token,c_rate,c_limit FROM user_log WHERE user=? && logid<? && expire>? && c_rate>0",[u,n,n],function(er1,rs1){
+            con.query("SELECT expire,token,c_rate,c_limit FROM user_log WHERE user=? && logid<? && expire>? && c_rate>0 && status=1",[u,n,n],function(er1,rs1){
                 if(rs1.length){
                     con.query("UPDATE user_log SET c_rate=? WHERE user=? && logid<? && expire>?",[rs1[0].c_rate-1,u,n,n],function(){});
                     data.token = rs1[0].token;
@@ -26,7 +26,7 @@ if(basic[0] && basic[1]){
                 }else{
                     e = new Date(n+(t*1000)).getTime();
                     var token = crypto.createHash('md5').update(JSON.stringify(n)).digest('hex');
-                    con.query("INSERT INTO user_log VALUES(?,?,?,?,?,?,?)",[n,e,u,token,'127.0.0.1',c,c],function(){});                
+                    con.query("INSERT INTO user_log VALUES(?,?,?,?,?,?,?,?)",[n,e,u,token,'127.0.0.1',c,c,1],function(){});                
                     data.token = token
                     data.login = rs[0];
                     data.rate = {limit:c,remaining:c,reset:e}
@@ -44,7 +44,7 @@ if(basic[0] && basic[1]){
 
 var token_auth = function(con,token,callback){
     n=new Date().getTime();
-    con.query("SELECT expire,user,token,c_rate,c_limit FROM user_log WHERE token=? && logid<? && expire>? && c_rate>0",[token,n,n],function(er1,rs1){
+    con.query("SELECT expire,user,token,c_rate,c_limit FROM user_log WHERE token=? && logid<? && expire>? && c_rate>0 && status=1",[token,n,n],function(er1,rs1){
         if(rs1.length){
             query = con.query("SELECT "+tb_data+" FROM user WHERE user=?",[rs1[0].user],function(er2,rs2){
                 if(rs2.length){
@@ -71,13 +71,13 @@ exports.logout = function(con,token,callback){
     query = con.query("SELECT token FROM user_log where token=?",[token],function(er,rs){
         if(rs.length){
             console.log(rs);
-            con.query("UPDATE user_log SET expire=? WHERE token=?",[n,token],function(er){
+            con.query("UPDATE user_log SET status=? WHERE token=?",[0,token],function(er){
                 if(!er){
-                    callback('token '+token+' revoked');
+                    callback({"s":1,"m":"token "+token+" revoked"});
                 }
             })
         }else{
-            callback('token revoke failed');
+            callback({"s":0,"m":"token revoke failed"});
         }
 
     })

@@ -1,12 +1,21 @@
 "use strict";
-angular.module('myApp',['ui.router','ui.bootstrap','oc.lazyLoad','dndLists'])
-.run(["$rootScope", "$state", function($rootScope,$state){
+angular.module('scrumban',['ui.router','ui.bootstrap','oc.lazyLoad','dndLists'])
+.run(["$rootScope", "$state","$window","$http", function($rootScope,$state,$window,$http){
 	$rootScope.$state = $state;
-	$rootScope.scoket_url = 'https://localhost/';
-	$rootScope.token = 'd11dbd45264b14cf455f6e9f1926dca2';
-	$rootScope.user = 'udin';
-}])
 
+	$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+		if(toState.name==='login.in'||toState.name==='login.reg'){
+			return;
+		}
+		if(!$window.localStorage.auth){
+			event.preventDefault();
+			$state.go('login.in');
+		}
+
+			var auth = JSON.parse($window.localStorage.auth);
+			$rootScope.socket = io.connect(window.location.origin,{query:{token: auth.token}})
+	});
+}])
 .config(["$urlRouterProvider", "$stateProvider", function($urlRouterProvider,$stateProvider) {
 	$urlRouterProvider.otherwise("board/all");
 	$stateProvider
@@ -22,19 +31,36 @@ angular.module('myApp',['ui.router','ui.bootstrap','oc.lazyLoad','dndLists'])
 		}
 	})
 	.state('login',{
-		url:"/login",
-		templateUrl:"mod/login/login.html",
+		abstract:true,
+		templateUrl:"mod/login/index.html",
 		resolve: {
 			load: ['$ocLazyLoad',function($ocLazyLoad){
 				return $ocLazyLoad.load({
+					name: 'loginMod',
 					files: ['mod/login/login.js']
 				})
 			}]
 		}
+
+	})
+	.state('login.in',{
+		url:"/login",
+		controller: 'LoginCtrl',
+		templateUrl:"mod/login/login.html",
+	})
+	.state('login.out',{
+		url:"/logout",
+		controller: 'LoginCtrl',
+		templateUrl:"mod/login/login.html",
+	})
+	.state('login.reg',{
+		url:"/register",
+		controller: 'RegisterCtrl',
+		templateUrl:"mod/login/register.html",
 	})
 	.state('board',{
 		abstract:true, 
-		url:"/board", 
+		url:"/board",
 		templateUrl:"mod/board/index.html",
 		resolve: {
 			load: ['$ocLazyLoad',function($ocLazyLoad){
@@ -46,19 +72,19 @@ angular.module('myApp',['ui.router','ui.bootstrap','oc.lazyLoad','dndLists'])
 		}
 	})
 	.state('board.l',{
-		url: '/all',
+		url: '/',
 		templateUrl: 'mod/board/list.html',
-		controller: 'projectCtrl',
+		controller: 'ProjectCtrl',
 	})
 	.state('board.a',{
 		url: '/new',
 		templateUrl: 'mod/board/add.html',
-		controller: 'projectCtrl',
+		controller: 'ProjectCtrl',
 	})
 	.state('board.d',{
 		url: '/:pid',
 		templateUrl: 'mod/board/detail.html',
-		controller: 'boardCtrl',
+		controller: 'BoardCtrl as board',
 	})
 	.state('card',{
 		abstract:true, 
@@ -73,10 +99,23 @@ angular.module('myApp',['ui.router','ui.bootstrap','oc.lazyLoad','dndLists'])
 			}]
 		}
 	})
+	.state('profile',{
+		url:"/profile", 
+		templateUrl:"mod/profile/index.html",
+		controller: 'ProfileCtrl',
+		resolve: {
+			load: ['$ocLazyLoad',function($ocLazyLoad){
+				return $ocLazyLoad.load({
+					name: 'profileMod',
+					files: ['mod/profile/profile.js']
+				})
+			}]
+		}
+	})
 	.state('store',{
 		url: '/store',
 		templateUrl: 'mod/store/simple-frame.html',
-		controller: 'StoreCtrl as StoreCtrl',
+		controller: 'StoreCtrl as store',
 		resolve: {
 			load: ['$ocLazyLoad',function($ocLazyLoad){
 				return $ocLazyLoad.load({

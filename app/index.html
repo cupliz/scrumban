@@ -1,30 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="scrumban">
 <head>
 <!-- <base href="/"> -->
 <title>Scrumban</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<link rel="icon" href="assets/img/favicon.ico">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/app.css">
+<script src="assets/js/angular.min.js"></script>
 
 </head>
 
 <body>
-<ng-include src="'mod/header.html'" scope="" onload=""></ng-include>
+<ng-include src="'mod/header.html'"></ng-include>
+<div class="container-fluid" ui-view="login"></div>
 <div class="container-fluid" ui-view></div>
 </body>
 
-<script src="assets/js/angular.min.js"></script>
 <script src="assets/js/angular-dnd.min.js"></script>
-<script src="assets/js/ui-bootstrap-tpls-0.12.1.js"></script>
+<script src="assets/js/ui-bootstrap-tpls-0.12.1.min.js"></script>
 <script src="assets/js/angular-ui-router.min.js"></script>
 <script src="assets/js/ocLazyLoad.min.js"></script>
 <script src="assets/js/CryptoJS.js"></script>
-<script src="https://localhost/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="app.js"></script>
 </html>

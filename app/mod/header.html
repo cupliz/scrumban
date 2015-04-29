@@ -5,24 +5,23 @@
       <i class="fa fa-th-large fa-lg white"></i>
     </button>
 	<div class="navbar-brand">
-		<input class="form-control navbar-search " placeholder="Search..." ng-model="findCust">
+		<input class="form-control navbar-search " placeholder="Search...">
 	</div>
 </div>
 <div class="navbar-collapse collapse" collapse="!isCollapsed">
-	<a ui-sref="store" ng-class="{active: $state.includes('store')}" class="btn btn-info navbar-btn"><i class="fa fa-home"></i></a>
-	<a ui-sref="board.l" ng-class="{active: $state.includes('board.l')}" class="btn btn-info navbar-btn"><i class="fa fa-columns"></i></a>
-	<a ui-sref="404" ng-class="{active: $state.includes('404')}" class="btn btn-info navbar-btn"><i class="fa fa-bar-chart"></i></a>
+	<a ui-sref="store" ng-class="{active: $state.includes('store')}" class="btn btn-warning navbar-btn"><i class="fa fa-home"></i></a>
+	<a ui-sref="board.l" ng-class="{active: $state.includes('board')}" class="btn btn-warning navbar-btn"><i class="fa fa-columns"></i></a>
+	<a ui-sref="404" ng-class="{active: $state.includes('404')}" class="btn btn-warning navbar-btn"><i class="fa fa-bar-chart"></i></a>
 	<div class="pull-right">
-		<a ui-sref="board.a" ng-class="{active: $state.includes('board.a')}" class="btn btn-info navbar-btn"><i class="fa fa-plus"></i></a>
+		<a ui-sref="board.a" ng-class="{active: $state.includes('board.a')}" class="btn btn-warning navbar-btn"><i class="fa fa-plus"></i></a>
 		<span class="btn-group" dropdown>
-		<a class="btn btn-warning navbar-btn"> Administrator</a>
-		<a ng-class="{active: $state.includes('admin')}" class="btn btn-warning navbar-btn dropdown-toggle" dropdown-toggle> <i class="fa fa-gear"></i></a>
+		<a ui-sref="profile" ng-class="{active: $state.includes('profile')}"  class="btn btn-warning navbar-btn"> Administrator</a>
+		<a class="btn btn-warning navbar-btn dropdown-toggle" dropdown-toggle> <i class="fa fa-gear"></i></a>
 		<ul class="dropdown-menu">
-			<li><a ui-sref="admin.edit">Edit</a></li>
-			<li><a href="#">Card</a></li>
-			<li><a ui-sref="admin.setting">Setting</a></li>
+			<li><a ui-sref="login.in">Login</a></li>
+			<li><a ui-sref="login.reg">SignUp</a></li>
 			<li class="divider"></li>
-			<li><a href="#">Logout</a></li>
+			<li><a ui-sref="login.out" href="#">Logout</a></li>
 		</ul>
 		</span>
 	</div>

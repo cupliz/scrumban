@@ -1,3 +1,4 @@
+<input ng-model="searchText">{{searchText}}</label>
 <div class="sprint">
 
 	<!-- Show task each user -->
@@ -6,16 +7,16 @@
 		<div class="panel">
 			<div class="panel-heading bg-steel"><i class="fa fa-play"></i> To-Do<span class="pull-right">[{{lists.todo.data.length}}/{{lists.todo.max}}]</span></div>
 			<div class="panel-body">
-				<ul dnd-list="lists.todo.data"
-					dnd-disable-if="lists.todo.data.length >= lists.todo.max">
-				    <li ng-repeat="item in lists.todo.data"
-				    	class="vertical bl-{{item.prior|pColor}}" 
+				<ul doing dnd-list="lists.todo.data"
+					dnd-disable-if="lists.todo.data.length >= lists.todo.max"
+			        dnd-drop="board.dropCallback(event, index, item)" name="todo">
+				    <li  name="todo" ng-repeat="item in lists.todo.data | filter:searchText"
+				    	class="vertical bl-{{item.label|labelColor}}" 
 				        dnd-draggable="item"
 				        dnd-moved="lists.todo.data.splice($index,1)"
 				        dnd-effect-allowed="move"
 				        dnd-selected="lists.selected = item"
-				        ng-class="{'selected': lists.selected === item}"
-				        >
+				        ng-class="{'selected': lists.selected === item}" name="todo">
 				        ({{item.user}}) {{item.name}}
 				    </li>
 				</ul>
@@ -29,15 +30,15 @@
 			<div class="panel-heading bg-orange"><i class="fa fa-forward"></i> In Progress <span class="pull-right">[{{lists.doing.data.length}}/{{lists.doing.max}}]</span></div>
 			<div class="panel-body">
 				<ul dnd-list="lists.doing.data"
-					dnd-disable-if="lists.doing.data.length >= lists.doing.max">
-				    <li ng-repeat="item in lists.doing.data"
-				    	class="vertical bl-{{item.prior|pColor}}" 
+					dnd-disable-if="lists.doing.data.length >= lists.doing.max"
+			        dnd-drop="board.dropCallback(event, index, item)" name="doing">
+				    <li name="doing" ng-repeat="item in lists.doing.data"
+				    	class="vertical bl-{{item.label|labelColor}}" 
 				        dnd-draggable="item"
 				        dnd-moved="lists.doing.data.splice($index,1)"
 				        dnd-effect-allowed="move"
 				        dnd-selected="lists.selected = item"
-				        ng-class="{'selected': lists.selected === item}"
-				        >
+				        ng-class="{'selected': lists.selected === item}" name="doing">
 				        ({{item.user}}) {{item.name}}
 				    </li>
 				</ul>
@@ -51,15 +52,15 @@
 			<div class="panel-heading bg-blue"><i class="fa fa-repeat"></i> Review<span class="pull-right">[{{lists.test.data.length}}/{{lists.test.max}}]</span></div>
 			<div class="panel-body">
 				<ul dnd-list="lists.test.data"
-					dnd-disable-if="lists.test.data.length >= lists.test.max">
+					dnd-disable-if="lists.test.data.length >= lists.test.max"
+			        dnd-drop="board.dropCallback(event, index, item)" name="test">
 				    <li ng-repeat="item in lists.test.data"
-				    	class="vertical bl-{{item.prior|pColor}}" 
+				    	class="vertical bl-{{item.label|labelColor}}" 
 				        dnd-draggable="item"
-				        dnd-moved="lists.test.data.splice($index, 1)"
+				        dnd-moved="lists.test.data.splice($index,1)"
 				        dnd-effect-allowed="move"
 				        dnd-selected="lists.selected = item"
-				        ng-class="{'selected': lists.selected === item}"
-				        >
+				        ng-class="{'selected': lists.selected === item}" name="test">
 				        ({{item.user}}) {{item.name}}
 				    </li>
 				</ul>
@@ -73,15 +74,15 @@
 			<div class="panel-heading bg-green"><i class="fa fa-stop"></i> Done <span class="pull-right">[{{lists.done.data.length}}/{{lists.done.max}}]</span></div>
 			<div class="panel-body">
 				<ul dnd-list="lists.done.data"
-					dnd-disable-if="lists.done.data.length >= lists.done.max">
+					dnd-disable-if="lists.done.data.length >= lists.done.max"
+			        dnd-drop="board.dropCallback(event, index, item)" name="done">
 				    <li ng-repeat="item in lists.done.data"
-				    	class="vertical bl-{{item.prior|pColor}}" 
+				    	class="vertical bl-{{item.label|labelColor}}" 
 				        dnd-draggable="item"
-				        dnd-moved="lists.done.data.splice($index, 1)"
+				        dnd-moved="lists.done.data.splice($index,1)"
 				        dnd-effect-allowed="move"
 				        dnd-selected="lists.selected = item"
-				        ng-class="{'selected': lists.selected === item}"
-				        >
+				        ng-class="{'selected': lists.selected === item}" name="done">
 				        ({{item.user}}) {{item.name}}
 				    </li>
 				</ul>
@@ -108,7 +109,7 @@
 			<div class="panel">
 				<div class="panel-heading bg-teal"><i class="fa fa-gamepad"></i> Fresh Idea 
 				<span class="pull-right">
-					<a class="btn btn-default btn-sm btn-panel" ng-click="submitCard(textarea)"><i class="fa fa-plus-square"></i> Add</a>
+					<a class="btn btn-default btn-sm btn-panel" ng-click="board.submitCard(textarea)"><i class="fa fa-plus-square"></i> Add</a>
 				</span>
 				</div>
 				<div class="panel-body">
@@ -116,7 +117,7 @@
 					<textarea class="form-control textarea" ng-model="textarea" rows="3" placeholder="Write your thoughts here..."></textarea>
 				</div>
 				<div class="col-xs-4">
-		        <img src="assets/img/user_trash.png" class="trash pull-right" dnd-list="[]" dnd-drop="removeCard(event, index, item, external, type, 'containerType')">
+		        <img src="assets/img/user_trash.png" class="trash pull-right" dnd-list="[]" dnd-drop="board.removeCard(event, index, item, external, type, 'containerType')">
 				</div>
 				</div>
 			</div>
@@ -126,15 +127,15 @@
 				<div class="panel-heading bg-mauve"><i class="fa fa-music"></i> &nbsp Wish list <span class="pull-right">[{{lists.wish.data.length}}/{{lists.wish.max}}]</span></div>
 				<div class="panel-body backlog">
 					<ul dnd-list="lists.wish.data"
-						dnd-disable-if="lists.wish.data.length >= lists.wish.max">
+						dnd-disable-if="lists.wish.data.length >= lists.wish.max"
+			        	dnd-drop="board.dropCallback(event, index, item)" name="wish">
 					    <li ng-repeat="item in lists.wish.data"
-					    	class="horizontal bl-{{item.prior|pColor}}" 
+					    	class="horizontal bl-{{item.label|labelColor}}" 
 					        dnd-draggable="item"
 					        dnd-moved="lists.wish.data.splice($index, 1)"
 					        dnd-effect-allowed="move"
 					        dnd-selected="lists.selected = item"
-					        ng-class="{'selected': lists.selected === item}"
-					        >
+					        ng-class="{'selected': lists.selected === item}" name="wish">
 					        ({{item.user}}) {{item.name}}
 					    </li>
 					</ul>
@@ -145,3 +146,4 @@
 	</div>
 </footer>
 <!-- End of show if user administrator / customer -->
+<div></div>

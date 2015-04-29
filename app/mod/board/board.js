@@ -1,48 +1,30 @@
 angular.module('boardMod',[])
-.filter('pColor', function(){
-    return function(pi){
-        switch(pi){
-            case 'low':
-                return 'green';
-                break;
-            case 'medium':
-                return 'yellow';
-                break;
-            case 'high':
-                return 'red';
-                break;
-            default: 
-                return 'grey';
-                break;
+.filter('labelColor', function(){
+    return function(label){
+        if(label){
+            return JSON.parse(label).color;
+        }else{
+            return 'grey'
         }
     }
 })
-.factory('socketf', ['$rootScope', function($rootScope){
-    return {
-        on: function(event,callback){
-            socket.on(event,function(data){
-                $rootScope.$apply(function(){
-                    callback(data);
-                })
-            })
-        },
-        emit: function(event,data){
-            socket.emit(event,data);
-        }
-    };
-}])
-.controller('boardCtrl',function($rootScope,$scope,$http,$state,socketf){
-    var socket = io.connect($rootScope.scoket_url,{query:{token:$rootScope.token}});
+.controller('BoardCtrl',function($rootScope,$window,$scope,$state){
+
+    if($window.localStorage.auth){
+        auth = JSON.parse($window.localStorage.auth);
+    }
+    var socket = io.connect('/',{query:{token: auth.token}});
     var pid = $state.params.pid;
+
     function uid (){
         date = new Date().getTime().toString();
         datemd5 = CryptoJS.MD5(date).toString();
         var uid = btoa(datemd5.substr(datemd5.length - 6));
         return uid;
     }
-    console.log(uid());
-    socket.emit('project:pid',pid);
-    socket.on('project:'+pid,function(rs){
+    // console.log(uid());
+    $rootScope.socket.emit('project:pid',pid);
+    $rootScope.socket.on('project:'+pid,function(rs){
         if(rs.length){
         $scope.$apply(function(){
             $scope.lists = JSON.parse(rs[0].map);
@@ -52,8 +34,8 @@ angular.module('boardMod',[])
         }
     });
 
-    socket.emit('task:list',{pid:pid,st:'todo',user:$rootScope.user});
-    socket.on('task:',function(rs){
+    $rootScope.socket.emit('task:list',{pid:pid,st:'todo',user:auth.login.user});
+    $rootScope.socket.on('task:',function(rs){
         $scope.$apply(function(){
         var wish=[],todo=[],doing=[],test=[],done=[];
             rs.forEach(function(val,key){
@@ -75,33 +57,31 @@ angular.module('boardMod',[])
             }
         })
     })
-    $scope.update = function(index,tb){
-        tb.splice(index, 1);
-        console.log(tb.length);
+    this.dropCallback = function(event, index, item) {
+        var type = event.target.attributes['name'].value;
+        if(!(item.sort==index && item.type==type)){
+            $rootScope.socket.emit('task:update',{item:item,index:index,type:type});
+        }
+        return item;
+    };
 
-        // socket.emit('task:u',{});
-        // if(tb == 'todo'){
-        //     console.log($scope.todo);   
-        // }
+    this.removeCard = function(event, index, item){
+        $rootScope.socket.emit('task:remove',item);
     }
-    $scope.removeCard = function(event, index, item){
-        socket.emit('task:remove',item);
-    }
-    $scope.submitCard = function(text){
+    this.submitCard = function(text){
     	if(text){
 	    	$scope.lists.wish.data.push({name:text});
-            socket.emit('task:add',{tid:uid(),project:pid,name:text,user:$rootScope.user})
+            $rootScope.socket.emit('task:add',{tid:uid(),project:pid,name:text,user:auth.login.user})
 	    	$scope.textarea = '';
     	}
     }
 })
-.controller('projectCtrl', function($rootScope,$scope){
-    var socket = io.connect($rootScope.scoket_url,{query:{token:$rootScope.token}});
-    
-    socket.emit('project:user',$rootScope.user);
-    socket.on('project:'+$rootScope.user,function(rs){
-        $scope.$apply(function(){
-            $scope.pList = rs;
+.controller('ProjectCtrl', function($rootScope,$scope,$window){
+        auth = JSON.parse($window.localStorage.auth);
+        $rootScope.socket.emit('project:user',auth.login.user);
+        $rootScope.socket.on('project:'+auth.login.user,function(rs){
+            $scope.$apply(function(){
+                $scope.pList = rs;
+            })
         })
-    })
 })
